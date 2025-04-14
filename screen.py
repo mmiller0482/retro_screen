@@ -12,29 +12,30 @@ class Screen:
     def __init__(
         self,
         caption: str = "Window",
-        width: int = None,
-        height: int = None,
-        scale: int = None,
+        width: int | None = None,
+        height: int | None = None,
+        scale: int | None = None,
     ):
-        if width is None:
-            width = self.__class__.WIDTH
-        if height is None:
-            height = self.__class__.HEIGHT
-        if scale is None:
-            scale = self.__class__.SCALE
-        self.width = width
-        self.height = height
-        self.scale = scale
-        pygame.init()
+        if not pygame.display.get_init():
+            raise RuntimeError(
+                "pygame.display must be initialized before creating a Screen."
+                "Simply call pygame.init() somewhere in your main script.")
+        cls = self.__class__
+        self.width = width or cls.WIDTH
+        self.height = height or cls.HEIGHT
+        self.scale = scale or cls.SCALE
+
         self.window = pygame.display.set_mode(
-            (width * scale, height * scale)
-        )  # ← Store this
+            (self.width * self.scale, self.height * self.scale)
+        )
         pygame.display.set_caption(caption)
-        self.surface = pygame.Surface((width, height))
+
+        self.surface = pygame.Surface((self.width, self.height))
 
     def reset_state(self, color: Tuple[int, int, int]):
         self.surface.fill(color)
 
 
-
-
+if __name__ == "__main__":
+    pygame.init()
+    screen = Screen()

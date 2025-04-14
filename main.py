@@ -1,5 +1,8 @@
+import pygame
+
 from screen import Screen
 from screen_handler import ScreenHandler
+
 
 def main():
     screen = Screen()
@@ -8,4 +11,5 @@ def main():
 
 
 if __name__ == "__main__":
+    pygame.init()
     main()
