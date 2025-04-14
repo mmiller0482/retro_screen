@@ -26,7 +26,10 @@ class Screen:
         self.width = width
         self.height = height
         self.scale = scale
-        pygame.display.set_mode((width * scale, height * scale))
+        pygame.init()
+        self.window = pygame.display.set_mode(
+            (width * scale, height * scale)
+        )  # ← Store this
         pygame.display.set_caption(caption)
         self.surface = pygame.Surface((width, height))
 
@@ -39,8 +42,6 @@ class ScreenHandler:
         self._screen = screen
 
     def run(self):
-        # Initialize Pygame
-        pygame.init()
 
         # Frame limiter
         clock = pygame.time.Clock()
@@ -56,13 +57,16 @@ class ScreenHandler:
                     pygame.quit()
                     sys.exit()
 
+            # Clear the surface with background color
+            self._screen.surface.fill(self._screen.BACKGROUND)
+
             # Draw the moving black dot
             self._screen.surface.set_at((dot_x, dot_y), (0, 0, 0))
 
             # Move the dot to the right, wrap around
             dot_x = (dot_x + 1) % self._screen.width
 
-            # Scale and draw the bitmap
+            # Scale and draw to display
             scaled_surface = pygame.transform.scale(
                 self._screen.surface,
                 (
@@ -70,10 +74,9 @@ class ScreenHandler:
                     self._screen.height * self._screen.scale,
                 ),
             )
-            self._screen.surface.blit(scaled_surface, (0, 0))
+            self._screen.window.blit(scaled_surface, (0, 0))
             pygame.display.flip()
 
-            # Wait to maintain 15 FPS
             clock.tick(FPS)
 
 
