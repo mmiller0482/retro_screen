@@ -1,49 +1,82 @@
+from typing import Tuple
+
 import pygame
 import sys
 
-# Initialize Pygame
-pygame.init()
 
-# Screen dimensions
-WIDTH, HEIGHT = 160, 144
-SCALE = 4
+class Screen:
+    WIDTH = 160
+    HEIGHT = 144
+    SCALE = 4
+    BACKGROUND: Tuple[int, int, int] = (127, 127, 127)
 
-# Create the window
-screen = pygame.display.set_mode((WIDTH * SCALE, HEIGHT * SCALE))
-pygame.display.set_caption("Sweeping Dot")
+    def __init__(
+        self,
+        caption: str = "Window",
+        width: int = None,
+        height: int = None,
+        scale: int = None,
+    ):
+        if width is None:
+            width = self.__class__.WIDTH
+        if height is None:
+            height = self.__class__.HEIGHT
+        if scale is None:
+            scale = self.__class__.SCALE
+        self.width = width
+        self.height = height
+        self.scale = scale
+        pygame.display.set_mode((width * scale, height * scale))
+        pygame.display.set_caption(caption)
+        self.surface = pygame.Surface((width, height))
 
-# Surface for the bitmap screen
-bitmap_surface = pygame.Surface((WIDTH, HEIGHT))
+    def reset_state(self, color: Tuple[int, int, int]):
+        self.surface.fill(color)
 
-# Frame limiter
-clock = pygame.time.Clock()
-FPS = 15
 
-# Dot position
-dot_x = 0
-dot_y = HEIGHT // 2  # Middle of screen vertically
+class ScreenHandler:
+    def __init__(self, screen: Screen):
+        self._screen = screen
 
-# Main loop
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+    def run(self):
+        # Initialize Pygame
+        pygame.init()
 
-    # Fill screen white
-    bitmap_surface.fill((127, 127, 127))
+        # Frame limiter
+        clock = pygame.time.Clock()
+        FPS = 15
+        # Dot position
+        dot_x = 0
+        dot_y = self._screen.height // 2  # Middle of screen vertically
 
-    # Draw the moving black dot
-    bitmap_surface.set_at((dot_x, dot_y), (0, 0, 0))
+        # Main loop
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-    # Move the dot to the right, wrap around
-    dot_x = (dot_x + 1) % WIDTH
+            # Draw the moving black dot
+            self._screen.surface.set_at((dot_x, dot_y), (0, 0, 0))
 
-    # Scale and draw the bitmap
-    scaled_surface = pygame.transform.scale(
-        bitmap_surface, (WIDTH * SCALE, HEIGHT * SCALE))
-    screen.blit(scaled_surface, (0, 0))
-    pygame.display.flip()
+            # Move the dot to the right, wrap around
+            dot_x = (dot_x + 1) % self._screen.width
 
-    # Wait to maintain 15 FPS
-    clock.tick(FPS)
+            # Scale and draw the bitmap
+            scaled_surface = pygame.transform.scale(
+                self._screen.surface,
+                (
+                    self._screen.width * self._screen.scale,
+                    self._screen.height * self._screen.scale,
+                ),
+            )
+            self._screen.surface.blit(scaled_surface, (0, 0))
+            pygame.display.flip()
+
+            # Wait to maintain 15 FPS
+            clock.tick(FPS)
+
+
+screen = Screen()
+screen_handler = ScreenHandler(screen)
+screen_handler.run()
