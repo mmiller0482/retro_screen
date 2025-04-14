@@ -26,7 +26,7 @@ class ScreenHandler:
                     sys.exit()
 
             # Clear the surface with background color
-            self._screen.surface.fill(self._screen.BACKGROUND)
+            self._screen.reset_state()
 
             # Draw the moving black dot
             self._screen.surface.set_at((dot_x, dot_y), (0, 0, 0))

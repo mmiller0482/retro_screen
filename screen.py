@@ -4,10 +4,10 @@ import pygame
 
 
 class Screen:
-    WIDTH = 160
-    HEIGHT = 144
-    SCALE = 4
-    BACKGROUND: Tuple[int, int, int] = (127, 127, 127)
+    DEFAULT_WIDTH = 160
+    DEFAULT_HEIGHT = 144
+    DEFAULT_SCALE = 4
+    DEFAULT_BACKGROUND: Tuple[int, int, int] = (127, 127, 127)
 
     def __init__(
         self,
@@ -21,9 +21,9 @@ class Screen:
                 "pygame.display must be initialized before creating a Screen."
                 "Simply call pygame.init() somewhere in your main script.")
         cls = self.__class__
-        self.width = width or cls.WIDTH
-        self.height = height or cls.HEIGHT
-        self.scale = scale or cls.SCALE
+        self.width = width or cls.DEFAULT_WIDTH
+        self.height = height or cls.DEFAULT_HEIGHT
+        self.scale = scale or cls.DEFAULT_SCALE
 
         self.window = pygame.display.set_mode(
             (self.width * self.scale, self.height * self.scale)
@@ -32,7 +32,9 @@ class Screen:
 
         self.surface = pygame.Surface((self.width, self.height))
 
-    def reset_state(self, color: Tuple[int, int, int]):
+    def reset_state(self, color: Tuple[int, int, int] | None = None):
+        if color is None:
+            color = self.DEFAULT_BACKGROUND
         self.surface.fill(color)
 
 
