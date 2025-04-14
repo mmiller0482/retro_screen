@@ -18,8 +18,10 @@ class Screen:
     ):
         if not pygame.display.get_init():
             raise RuntimeError(
-                "pygame.display must be initialized before creating a Screen."
-                "Simply call pygame.init() somewhere in your main script.")
+                "pygame.display must be initialized before creating a Screen. "
+                "Call pygame.init() somewhere in your main script."
+            )
+
         cls = self.__class__
         self.width = width or cls.DEFAULT_WIDTH
         self.height = height or cls.DEFAULT_HEIGHT
@@ -32,10 +34,32 @@ class Screen:
 
         self.surface = pygame.Surface((self.width, self.height))
 
-    def reset_state(self, color: Tuple[int, int, int] | None = None):
+        # Initialize pixel buffer with default background color
+        self.buffer: list[list[Tuple[int, int, int]]] = [
+            [cls.DEFAULT_BACKGROUND for _ in range(self.width)]
+            for _ in range(self.height)
+        ]
+
+    def reset_buffer(self, color: Tuple[int, int, int] | None = None):
+        """Reset the screen buffer to the given color or the default background."""
         if color is None:
             color = self.DEFAULT_BACKGROUND
-        self.surface.fill(color)
+        for y in range(self.height):
+            for x in range(self.width):
+                self.buffer[y][x] = color
+
+    def render(self):
+        """Render the current buffer to the display."""
+        for y in range(self.height):
+            for x in range(self.width):
+                self.surface.set_at((x, y), self.buffer[y][x])
+
+        scaled = pygame.transform.scale(
+            self.surface,
+            (self.width * self.scale, self.height * self.scale),
+        )
+        self.window.blit(scaled, (0, 0))
+        pygame.display.flip()
 
 
 if __name__ == "__main__":
