@@ -1,6 +1,6 @@
 import pygame
 
-from colors.bw_palette import BWColor, BWColorPalette
+from colors.bw_palette import BWColorPalette
 from screen import Screen
 from a_game import AGame
 

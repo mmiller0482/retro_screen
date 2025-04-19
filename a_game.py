@@ -3,7 +3,6 @@ import random
 
 import pygame
 
-from colors.bw_palette import BWColor
 from screen import Screen
 
 

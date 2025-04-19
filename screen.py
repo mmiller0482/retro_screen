@@ -12,7 +12,7 @@ class Screen:
     DEFAULT_HEIGHT = 144
     DEFAULT_SCALE = 4
     DEFAULT_BACKGROUND: Tuple[int, int, int] = (127, 127, 127)
-    DEFAULT_COLOR_PALETTE: type[ColorPalette] =  DefaultColorPalette
+    DEFAULT_COLOR_PALETTE: type[ColorPalette] = DefaultColorPalette
 
     def __init__(
         self,
