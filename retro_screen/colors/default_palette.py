@@ -19,6 +19,7 @@ class DefaultColor(Enum):
 
 class DefaultColorPalette(ColorPalette):
     COLOR_ENUM = DefaultColor
+    BG_COLOR = COLOR_ENUM.WHITE
 
     def __init__(self):
         colors: dict[Enum, Tuple[int, int, int]] = {

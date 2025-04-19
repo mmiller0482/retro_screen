@@ -11,7 +11,6 @@ class Screen:
     DEFAULT_WIDTH = 160
     DEFAULT_HEIGHT = 144
     DEFAULT_SCALE = 4
-    DEFAULT_BACKGROUND: Tuple[int, int, int] = (127, 127, 127)
     DEFAULT_COLOR_PALETTE: type[ColorPalette] = DefaultColorPalette
 
     def __init__(
@@ -40,17 +39,18 @@ class Screen:
 
         self.surface = pygame.Surface((self.width, self.height))
 
-        # Initialize pixel buffer with default background color
-        self.buffer: list[list[Tuple[int, int, int]]] = [
-            [cls.DEFAULT_BACKGROUND for _ in range(self.width)]
-            for _ in range(self.height)
-        ]
         self.color_palette = color_palette or cls.DEFAULT_COLOR_PALETTE()
+
+        # Initialize pixel buffer with default background color
+        bg_color = self.color_palette.get_background_rgb()
+        self.buffer: list[list[Tuple[int, int, int]]] = [
+            [bg_color for _ in range(self.width)] for _ in range(self.height)
+        ]
 
     def reset_buffer(self, color: Tuple[int, int, int] | None = None):
         """Reset the screen buffer to the given color or the default background."""
         if color is None:
-            color = self.DEFAULT_BACKGROUND
+            color = self.color_palette.get_background_rgb()
         for y in range(self.height):
             for x in range(self.width):
                 self.buffer[y][x] = color

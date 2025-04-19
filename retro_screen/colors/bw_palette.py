@@ -14,6 +14,7 @@ class BWColor(Enum):
 
 class BWColorPalette(ColorPalette):
     COLOR_ENUM = BWColor
+    BG_COLOR = BWColor.WHITE
 
     def __init__(self):
         colors: dict[Enum, Tuple[int, int, int]] = {
