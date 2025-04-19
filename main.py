@@ -1,12 +1,12 @@
 import pygame
 
-from bw_screen import BWScreen
+from colors.bw_palette import BWColor, BWColorPalette
 from screen import Screen
 from a_game import AGame
 
 
 def main():
-    screen = BWScreen()
+    screen = Screen(color_palette=BWColorPalette())
     screen_handler = AGame(screen)
     screen_handler.run()
 

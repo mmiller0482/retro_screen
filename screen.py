@@ -1,9 +1,10 @@
+from enum import Enum
 from typing import Tuple
 
 import pygame
 
-from colors.colors import Color
-from colors.default_color_map import color_map
+from colors.color_palette import ColorPalette
+from colors.default_palette import DefaultColorPalette
 
 
 class Screen:
@@ -11,7 +12,7 @@ class Screen:
     DEFAULT_HEIGHT = 144
     DEFAULT_SCALE = 4
     DEFAULT_BACKGROUND: Tuple[int, int, int] = (127, 127, 127)
-    DEFAULT_COLOR_MAP: dict[Color, Tuple[int, int, int]] = color_map
+    DEFAULT_COLOR_PALETTE: type[ColorPalette] =  DefaultColorPalette
 
     def __init__(
         self,
@@ -19,7 +20,7 @@ class Screen:
         width: int | None = None,
         height: int | None = None,
         scale: int | None = None,
-        color_map: dict[Color, Tuple[int, int, int]] | None = None,
+        color_palette: ColorPalette | None = None,
     ):
         if not pygame.display.get_init():
             raise RuntimeError(
@@ -44,7 +45,7 @@ class Screen:
             [cls.DEFAULT_BACKGROUND for _ in range(self.width)]
             for _ in range(self.height)
         ]
-        self.color_map = color_map or cls.DEFAULT_COLOR_MAP
+        self.color_palette = color_palette or cls.DEFAULT_COLOR_PALETTE()
 
     def reset_buffer(self, color: Tuple[int, int, int] | None = None):
         """Reset the screen buffer to the given color or the default background."""
@@ -54,15 +55,15 @@ class Screen:
             for x in range(self.width):
                 self.buffer[y][x] = color
 
-    def set_pixel(self, x: int, y: int, color: Color):
+    def set_pixel(self, x: int, y: int, color: Enum):
         """Set the pixel at the given position to the given color."""
-        if color not in self.color_map:
+        if not self.color_palette.has_color(color):
             raise ValueError(f"Invalid color: {color}")
 
         if not 0 <= x < self.width or not 0 <= y < self.height:
             raise IndexError(f"Pixel index out of range: ({x}, {y})")
 
-        self.buffer[y][x] = self.color_map[color]
+        self.buffer[y][x] = self.color_palette[color]
 
     def render(self):
         """Render the current buffer to the display."""

@@ -1,0 +1,22 @@
+from enum import Enum, auto
+from typing import Tuple
+
+from colors.default_palette import ColorPalette
+
+white = (255, 255, 255)
+black = (0, 0, 0)
+
+
+class BWColor(Enum):
+    WHITE = auto()
+    BLACK = auto()
+
+
+class BWColorPalette(ColorPalette):
+    def __init__(self):
+        colors: dict[Enum, Tuple[int, int, int]] = {
+            BWColor.BLACK: black,
+            BWColor.WHITE: white,
+        }
+
+        super().__init__(colors)
