@@ -1,11 +1,12 @@
 import pygame
 
+from bw_screen import BWScreen
 from screen import Screen
 from a_game import AGame
 
 
 def main():
-    screen = Screen()
+    screen = BWScreen()
     screen_handler = AGame(screen)
     screen_handler.run()
 

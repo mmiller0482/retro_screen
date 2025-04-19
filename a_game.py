@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from colors.colors import Color
+from colors.bw_colors import BWColor
 from screen import Screen
 
 
@@ -18,7 +18,7 @@ class AGame:
         pixel_count = self._screen.width * self._screen.height
         y = 0
 
-        color_list = list(Color)
+        color_list = list(BWColor)
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
