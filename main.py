@@ -1,7 +1,7 @@
 import pygame
 
-from retro_screen.colors.bw_palette import BWColorPalette
-from retro_screen.screen import Screen
+from retro_screen import BWColorPalette
+from retro_screen import Screen
 from a_game import AGame
 
 
