@@ -2,8 +2,8 @@ from typing import Tuple
 
 import pygame
 
-from colors import Color
-from default_color_map import color_map
+from colors.colors import Color
+from colors.default_color_map import color_map
 
 
 class Screen:

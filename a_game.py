@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from colors import Color
+from colors.colors import Color
 from screen import Screen
 
 

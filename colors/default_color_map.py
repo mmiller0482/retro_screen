@@ -1,4 +1,4 @@
-from colors import (
+from colors.colors import (
     Color,
     white,
     black,
