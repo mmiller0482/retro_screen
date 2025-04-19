@@ -13,6 +13,8 @@ class BWColor(Enum):
 
 
 class BWColorPalette(ColorPalette):
+    COLOR_ENUM = BWColor
+
     def __init__(self):
         colors: dict[Enum, Tuple[int, int, int]] = {
             BWColor.BLACK: black,
