@@ -1,0 +1,10 @@
+[project]
+name = "screenlib"
+version = "0.1.0"
+description = "A simple pixel-based screen abstraction for games"
+authors = [{ name = "Matt Miller", email = "mmiller0482@gmail.com" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = ["pygame"]
+
