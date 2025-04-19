@@ -1,6 +1,6 @@
 import pytest
 
-from screen import Screen
+from retro_screen.screen import Screen
 
 
 class TestScreen:

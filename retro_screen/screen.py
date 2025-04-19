@@ -3,8 +3,8 @@ from typing import Tuple
 
 import pygame
 
-from colors.color_palette import ColorPalette
-from colors.default_palette import DefaultColorPalette
+from retro_screen.colors.color_palette import ColorPalette
+from retro_screen.colors.default_palette import DefaultColorPalette
 
 
 class Screen:

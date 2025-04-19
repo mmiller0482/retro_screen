@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from screen import Screen
+from retro_screen.screen import Screen
 
 
 class AGame:

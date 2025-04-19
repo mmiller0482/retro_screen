@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from typing import Tuple
 
-from colors.default_palette import ColorPalette
+from retro_screen.colors.default_palette import ColorPalette
 
 white = (255, 255, 255)
 black = (0, 0, 0)

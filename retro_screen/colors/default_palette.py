@@ -1,7 +1,7 @@
 from enum import Enum, auto
 from typing import Tuple
 
-from colors.color_palette import ColorPalette
+from retro_screen.colors.color_palette import ColorPalette
 
 
 class Color(Enum):
