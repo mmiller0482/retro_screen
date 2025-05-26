@@ -5,6 +5,7 @@ import pygame
 
 from retro_screen.colors.color_palette import ColorPalette
 from retro_screen.colors.default_palette import DefaultColorPalette
+from retro_screen.colors.pixel_color import PixelColor
 
 
 class Screen:
@@ -42,8 +43,8 @@ class Screen:
         self.color_palette = color_palette or cls.DEFAULT_COLOR_PALETTE()
 
         # Initialize pixel buffer with default background color
-        bg_color = self.color_palette.get_background_rgb()
-        self.buffer: list[list[Tuple[int, int, int]]] = [
+        bg_color: PixelColor = self.color_palette.get_background_rgb()
+        self.buffer: list[list[PixelColor]] = [
             [bg_color for _ in range(self.width)] for _ in range(self.height)
         ]
 
@@ -69,7 +70,7 @@ class Screen:
         """Render the current buffer to the display."""
         for y in range(self.height):
             for x in range(self.width):
-                self.surface.set_at((x, y), self.buffer[y][x])
+                self.surface.set_at((x, y), self.buffer[y][x].tuple())
 
         scaled = pygame.transform.scale(
             self.surface,

@@ -2,9 +2,10 @@ from enum import Enum, auto
 from typing import Tuple
 
 from retro_screen.colors.default_palette import ColorPalette
+from retro_screen.colors.pixel_color import PixelColor
 
-white = (255, 255, 255)
-black = (0, 0, 0)
+white = PixelColor(255, 255, 255)
+black = PixelColor(0, 0, 0)
 
 
 class BWColor(Enum):
@@ -17,7 +18,7 @@ class BWColorPalette(ColorPalette):
     BG_COLOR = BWColor.WHITE
 
     def __init__(self):
-        colors: dict[Enum, Tuple[int, int, int]] = {
+        colors: dict[Enum, PixelColor] = {
             BWColor.BLACK: black,
             BWColor.WHITE: white,
         }
