@@ -48,7 +48,7 @@ class Screen:
             [bg_color for _ in range(self.width)] for _ in range(self.height)
         ]
 
-    def reset_buffer(self, color: Tuple[int, int, int] | None = None):
+    def reset_buffer(self, color: PixelColor | None = None):
         """Reset the screen buffer to the given color or the default background."""
         if color is None:
             color = self.color_palette.get_background_rgb()
